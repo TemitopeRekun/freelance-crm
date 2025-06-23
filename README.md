@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧾 Freelance CRM – Built with Next.js & TypeScript
 
-## Getting Started
+A real-world client and invoice management app for freelancers. Built to simulate a professional workflow using modern frontend tools and an agile sprint roadmap.
 
-First, run the development server:
+## 🚀 Tech Stack
+- Next.js 14 (App Router)
+- TypeScript
+- TailwindCSS
+- Firebase (Auth + Firestore)
+- Framer Motion
+- Chart.js (Dashboard)
+- jsPDF (PDF Invoice Generation)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🎯 MVP Features
+- Add/Edit/Delete clients
+- Create invoices with line items
+- Download invoice as PDF
+- Mark invoices as Paid or Unpaid
+- Dashboard with financial summary
+- Secure login via Firebase Auth
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Project Structure
+app/
+clients/
+invoices/
+dashboard/
+components/
+lib/
+styles/
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📆 Agile Sprint Plan
+Sprint 1: Client Management  
+Sprint 2: Invoice Creation & PDF  
+Sprint 3: Dashboard & Analytics  
+Sprint 4: Auth & Route Protection  
+Sprint 5: Final polish & deployment
 
-## Learn More
+## ✅ Status
+- [x] Project initialized with Next.js + TypeScript
+- [x] Firebase integrated
+- [ ] Sprint 1 in progress...
 
-To learn more about Next.js, take a look at the following resources:
+## 📸 Screenshots
+Coming soon...
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌐 Live Demo
+Coming soon...
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+MIT
