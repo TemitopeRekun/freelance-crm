@@ -1,5 +1,8 @@
 "use client";
 
+import { db } from "@/lib/firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+
 import React, { useState } from "react";
 
 interface ClientData {
@@ -26,9 +29,22 @@ const ClientForm: React.FC = () => {
 		});
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log("Submitted Client Data", formData);
+
+		try {
+			const docRef = await addDoc(collection(db, "clients"), {
+				...formData,
+				createdAt: Timestamp.now(),
+			});
+			console.log("client saved with ID", docRef.id);
+
+			setFormData({ name: "", email: "", phone: "", notes: "" });
+			alert("Client saved successfully.");
+		} catch (error) {
+			console.error("error saving client", error);
+			alert("Failed to save client.");
+		}
 	};
 
 	return (
