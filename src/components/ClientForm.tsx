@@ -31,8 +31,10 @@ const ClientForm: React.FC = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		console.log("submitting form...", formData);
 
 		try {
+			console.log("trying to save client");
 			const docRef = await addDoc(collection(db, "clients"), {
 				...formData,
 				createdAt: Timestamp.now(),
@@ -40,6 +42,8 @@ const ClientForm: React.FC = () => {
 			console.log("client saved with ID", docRef.id);
 
 			setFormData({ name: "", email: "", phone: "", notes: "" });
+
+			console.log("form cleared");
 			alert("Client saved successfully.");
 		} catch (error) {
 			console.error("error saving client", error);
@@ -60,7 +64,7 @@ const ClientForm: React.FC = () => {
 					name="name"
 					value={formData.name}
 					onChange={handleChange}
-					className="w-full border border-gray-300 ronded px-3 py-2"
+					className="w-full border border-gray-300 rounded px-3 py-2"
 					required
 				/>
 			</div>
@@ -72,7 +76,7 @@ const ClientForm: React.FC = () => {
 					name="email"
 					value={formData.email}
 					onChange={handleChange}
-					className="w-full border border-gray-300 ronded px-3 py-2"
+					className="w-full border border-gray-300 rounded px-3 py-2"
 					required
 				/>
 			</div>
@@ -84,7 +88,7 @@ const ClientForm: React.FC = () => {
 					name="phone"
 					value={formData.phone}
 					onChange={handleChange}
-					className="w-full border border-gray-300 ronded px-3 py-2"
+					className="w-full border border-gray-300 rounded px-3 py-2"
 					required
 				/>
 			</div>
@@ -95,7 +99,7 @@ const ClientForm: React.FC = () => {
 					name="notes"
 					value={formData.notes}
 					onChange={handleChange}
-					className="w-full border border-gray-300 ronded px-3 py-2"
+					className="w-full border border-gray-300 rounded px-3 py-2"
 					rows={3}
 				/>
 			</div>

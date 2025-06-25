@@ -1,4 +1,5 @@
 import ClientForm from "@/components/ClientForm";
+import ClientList from "@/components/ClientList";
 import React from "react";
 
 const ClientsPage = () => {
@@ -10,6 +11,8 @@ const ClientsPage = () => {
 			</p>
 
 			<ClientForm />
+
+			<ClientList />
 		</main>
 	);
 };
