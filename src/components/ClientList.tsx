@@ -1,7 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import {
+	collection,
+	query,
+	orderBy,
+	onSnapshot,
+} from "firebase/firestore";
 
 interface Client {
 	id: string;
@@ -16,24 +21,17 @@ const ClientList: React.FC = () => {
 	const [clients, setClients] = useState<Client[]>([]);
 
 	useEffect(() => {
-		const fetchClients = async () => {
-			try {
-				const q = query(
-					collection(db, "clients"),
-					orderBy("createdAt", "desc")
-				);
-				const querySnapshot = await getDocs(q);
-				const data = querySnapshot.docs.map((doc) => ({
-					id: doc.id,
-					...doc.data(),
-				})) as Client[];
-				setClients(data);
-			} catch (error) {
-				console.error("Error fetching Clients:", error);
-			}
-		};
+		const q = query(collection(db, "clients"), orderBy("createdAt", "desc"));
 
-		fetchClients();
+		const unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const data = querySnapshot.docs.map((doc) => ({
+				id: doc.id,
+				...doc.data(),
+			})) as Client[];
+			setClients(data);
+		});
+
+		return () => unsubscribe();
 	}, []);
 
 	return (

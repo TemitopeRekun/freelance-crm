@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+
+## [0.3.0] – 2025-06-25
+### Added
+- Connected ClientForm to Firestore and handled submission
+- Implemented client data fetch using `getDocs()` and listed in UI
+- Styled form and client list using TailwindCSS
+- Fixed input reset issue after submission
+
 ## [0.2.0] – 2025-06-23
 ### Added
 - Built `ClientForm.tsx` with `useState` and TypeScript interface
