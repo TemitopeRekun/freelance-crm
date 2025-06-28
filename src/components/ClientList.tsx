@@ -1,24 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
-import {
-	collection,
-	query,
-	orderBy,
-	onSnapshot,
-} from "firebase/firestore";
-
-interface Client {
-	id: string;
-	name: string;
-	email: string;
-	phone: string;
-	notes: string;
-	createdAt?: any;
-}
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import { Client } from "@/types/client";
+import ClientCard from "./ClientCard";
+import ClientModal from "./ClientModal";
 
 const ClientList: React.FC = () => {
 	const [clients, setClients] = useState<Client[]>([]);
+	const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
 		const q = query(collection(db, "clients"), orderBy("createdAt", "desc"));
@@ -34,6 +25,16 @@ const ClientList: React.FC = () => {
 		return () => unsubscribe();
 	}, []);
 
+	const handleEdit = (client: Client) => {
+		setSelectedClient(client);
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setSelectedClient(null);
+		setIsModalOpen(false);
+	};
+
 	return (
 		<div className="mt-10">
 			<h2 className="text-xl font-semibold mb-4">Saved Clients</h2>
@@ -43,29 +44,20 @@ const ClientList: React.FC = () => {
 			) : (
 				<ul className="space-y-4">
 					{clients.map((client) => (
-						<li
+						<ClientCard
 							key={client.id}
-							className="p-4 border rounded bg-white shadow-sm">
-							<p>
-								<strong>Name:</strong>
-								{client.name}
-							</p>
-							<p>
-								<strong>Email:</strong>
-								{client.email}
-							</p>
-							<p>
-								<strong>Phone:</strong>
-								{client.phone}
-							</p>
-							<p>
-								<strong>Notes:</strong>
-								{client.notes}
-							</p>
-						</li>
+							client={client}
+							onEdit={handleEdit}
+						/>
 					))}
 				</ul>
 			)}
+
+			<ClientModal
+				isOpen={isModalOpen}
+				onClose={closeModal}
+				client={selectedClient}
+			/>
 		</div>
 	);
 };
