@@ -1,15 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import {
+	collection,
+	query,
+	orderBy,
+	onSnapshot,
+	doc,
+	deleteDoc,
+} from "firebase/firestore";
 import { Client } from "@/types/client";
+import ConfirmModal from "./ConfirmModal";
 import ClientCard from "./ClientCard";
 import ClientModal from "./ClientModal";
+import toast from "react-hot-toast";
 
 const ClientList: React.FC = () => {
 	const [clients, setClients] = useState<Client[]>([]);
 	const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
+	const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
 	useEffect(() => {
 		const q = query(collection(db, "clients"), orderBy("createdAt", "desc"));
@@ -35,6 +46,21 @@ const ClientList: React.FC = () => {
 		setIsModalOpen(false);
 	};
 
+	const handleDelete = async (client: Client) => {
+		try {
+			await deleteDoc(doc(db, "clients", client.id));
+			toast.success("client deleted");
+		} catch (error) {
+			console.error("Error deleting client:", error);
+			toast.error("Failed to delete client");
+		}
+	};
+
+	const openDeleteModal = (client: Client) => {
+		setClientToDelete(client);
+		setIsConfirmOpen(true);
+	};
+
 	return (
 		<div className="mt-10">
 			<h2 className="text-xl font-semibold mb-4">Saved Clients</h2>
@@ -48,6 +74,7 @@ const ClientList: React.FC = () => {
 							key={client.id}
 							client={client}
 							onEdit={handleEdit}
+							onDelete={openDeleteModal}
 						/>
 					))}
 				</ul>
@@ -57,6 +84,15 @@ const ClientList: React.FC = () => {
 				isOpen={isModalOpen}
 				onClose={closeModal}
 				client={selectedClient}
+			/>
+
+			<ConfirmModal
+				isOpen={isConfirmOpen}
+				onClose={() => setIsConfirmOpen(false)}
+				onConfirm={() => {
+					if (clientToDelete) handleDelete(clientToDelete);
+				}}
+				message={`Are you sure you want to delete ${clientToDelete?.name}?`}
 			/>
 		</div>
 	);

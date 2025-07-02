@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.3.0] – 2025-06-28
+### Added
+- Edit Client modal with Headless UI
+- Real-time `onSnapshot` updates on Firestore
+
+### Changed
+- Replaced `alert()` with `react-hot-toast` for better user feedback
+
 ## [0.3.0] – 2025-06-25
 ### Added
 - Connected ClientForm to Firestore and handled submission
