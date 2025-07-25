@@ -1,4 +1,5 @@
 "use client";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase";
 import {
@@ -7,6 +8,11 @@ import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 } from "firebase/auth";
+
+export const signInWithGoogle = async () => {
+	const provider = new GoogleAuthProvider();
+	return await signInWithPopup(auth, provider);
+};
 
 export function useAuth() {
 	const [user, setUser] = useState<any>(null);
@@ -18,7 +24,9 @@ export function useAuth() {
 		return () => unsubscribe();
 	}, []);
 
-	const logout = () => signOut(auth);
+	const logout = async () => {
+		await signOut(auth);
+	};
 
 	const login = (email: string, password: string) =>
 		signInWithEmailAndPassword(auth, email, password);
